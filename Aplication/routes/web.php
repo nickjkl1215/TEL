@@ -2,18 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 
 Route::middleware(['web'])->group(function(){
+
     Route::get('/', function () {
         return view('welcome');
     });
-    
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth'])->name('dashboard');
-
-  
-
 });
 
 Route::middleware(['auth'])->group(function(){
@@ -26,9 +25,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('clientes/atualizar/{id}', [HomeController::class, 'update']);
     Route::delete('clientes/deletar/{id}', [HomeController::class, 'delete']);
     //Usuarios
-    Route::put('dashboard/editar_user/{user}', [HomeController::class, 'editar_user'])->name('users.edicao');
-    Route::get('dashboard/edicao_user/{user}', [HomeController::class, 'Form_editar_user']);
-    Route::get('dashboard/deletar_user/{user}', [HomeController::class, 'delete_user']);
+    Route::put('dashboard/editar_user/{user}', [UserController::class, 'editar_user'])->name('users.edicao');
+    Route::get('dashboard/edicao_user/{user}', [UserController::class, 'Form_editar_user']);
+    Route::get('dashboard/deletar_user/{user}', [UserController::class, 'delete_user']);
 });
 
 require __DIR__.'/auth.php';
